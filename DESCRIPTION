@@ -8,7 +8,7 @@ Description: Integration of triple OME data sets using SOMs
 License: GPL-2
 LazyData: true
 #RoxygenNote: 6.0.1
-Depends: R (>= 3.5), oposSOM
+Depends: R (>= 3.4), oposSOM
 Imports:
   doParallel, ChAMP
 RoxygenNote: 6.0.1

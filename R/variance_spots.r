@@ -16,7 +16,7 @@ variance.spots=function()
   sample.spot.list <- list()
   sample.spot.core.list <- list()
   n.sample.modules <- 0
-  preferences$spot.threshold.modules=0.88
+  preferences$spot.threshold.modules=0.85
 
   #for (m in 1:ncol(indata))
   #{

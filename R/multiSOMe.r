@@ -20,6 +20,7 @@ opossom.new <- function(preferences=NULL)
   env$spot.list.dmap <- NULL
   env$spot.list.group.overexpression <- NULL
   env$spot.list.kmeans <- NULL
+  env$spot.list.variance <- NULL
   env$spot.list.overexpression <- NULL
   env$spot.list.samples <- NULL
   env$spot.list.underexpression <- NULL
@@ -402,8 +403,9 @@ eachOME.run <- function(env)
    # util.call(oposSOM:::pipeline.supportingMaps, env)
     if(iterat %in% c(1:3))
     {
-      util.call(entropyProfiles, env)
-      util.call(topologyProfiles, env)
+      util.call(oposSOM:::pipeline.supportingMaps, env)
+      util.call(oposSOM:::pipeline.entropyProfiles, env)
+      util.call(oposSOM:::pipeline.topologyProfiles, env)
     }
 
     util.call(oposSOM:::pipeline.sampleExpressionPortraits, env)
@@ -446,7 +448,7 @@ eachOME.run <- function(env)
       util.call(ScoV.underexp,env)
     }
    # util.call(oposSOM:::pipeline.summarySheetsModules, env)
-    util.call(summarySheetsModules, env)
+    util.call(oposSOM:::pipeline.summarySheetsModules, env)
     util.call(oposSOM:::pipeline.summarySheetsPATs, env)
 
 
