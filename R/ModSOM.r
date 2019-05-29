@@ -28,6 +28,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
   return.ids=modpar$return.ids
   database.dataset=modpar$database.dataset
   database.biomart=modpar$database.biomart
+  host=modpar$database.host
   weight_exp=modpar$weight_exp
   weight_meth=modpar$weight_meth
   weight_cnv=modpar$weight_cnv
@@ -96,7 +97,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
   {
     library("biomaRt" )
 
-    mart<-useMart(biomart = database.biomart, host ="www.ensembl.org") #   "jul2015.archive.ensembl.org"
+    mart<-useMart(biomart = database.biomart, host =host) #   "jul2015.archive.ensembl.org"
     mart<-useDataset(database.dataset ,mart=mart)
 
     biomart.table = getBM( c( row.ids.meth, row.ids.exp, row.ids.cnv, return.ids ) ,row.ids.meth ,rownames(indata.meth), mart, checkFilters=F )
@@ -136,10 +137,10 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
 
     library("biomaRt" )
 
-    mart<-useMart(biomart = database.biomart, host ="www.ensembl.org" ) #   "jul2015.archive.ensembl.org"
+    mart<-useMart(biomart = database.biomart, host = host ) #   "jul2015.archive.ensembl.org"
     mart<-useDataset(database.dataset ,mart=mart)
 
-    biomart.table = getBM( c( row.ids.meth,  "chromosome_name","strand" ) ,row.ids.meth ,rn, mart, checkFilters=F )
+    biomart.table = getBM( c( return.ids,  "chromosome_name","strand" ) ,return.ids ,rn, mart, checkFilters=F )
 
     if((length(which(biomart.table$chromosome_name=="X"))+length(which(biomart.table$chromosome_name=="Y")))>0)
     {

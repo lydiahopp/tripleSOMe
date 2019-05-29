@@ -19,7 +19,7 @@ run.som <- function(modpar=modpar,modsom=modsom)
                           flip.SOM.portraits = F,
 
                           database.biomart = "ENSEMBL_MART_ENSEMBL",
-                          database.host = "www.ensembl.org",#,
+                          database.host = modpar$database.host,
                           database.dataset = "hsapiens_gene_ensembl",
                           database.id.type =modpar$return.ids,
 

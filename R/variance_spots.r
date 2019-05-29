@@ -16,8 +16,8 @@ variance.spots=function()
   sample.spot.list <- list()
   sample.spot.core.list <- list()
   n.sample.modules <- 0
-  preferences$spot.threshold.modules=0.85
-
+  preferences$spot.threshold.modules=0.62
+  preferences$spot.coresize.modules=2
   #for (m in 1:ncol(indata))
   #{
   # define bigger core regions
@@ -177,8 +177,8 @@ variance.spots=function()
   util.info("Writing:", file.path(dirname, "*.pdf"))
   dir.create(dirname, showWarnings=FALSE, recursive=TRUE)
 
-  modules.report.sheets(spot.list=spot.list.variance, main="Group neg Correlation Spots", path=file.path(dirname,"Report.pdf") )
-  modules.profiles(spot.list=spot.list.variance,main="Group neg Correlation Spots", path=file.path(dirname,"Profiles.pdf") )
-  modules.chromosomes(spot.list=spot.list.variance, main="Group neg Correlation Spots", path=file.path(dirname,"Chromosomes.pdf") )
+  modules.report.sheets(spot.list=spot.list.variance, main="Variance Spots", path=file.path(dirname,"Report.pdf") )
+  modules.profiles(spot.list=spot.list.variance,main="Variance Spots", path=file.path(dirname,"Profiles.pdf") )
+  modules.chromosomes(spot.list=spot.list.variance, main="Variance Spots", path=file.path(dirname,"Chromosomes.pdf") )
 
 }
