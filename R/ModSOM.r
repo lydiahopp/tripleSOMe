@@ -125,6 +125,8 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
     names(rn)=biomart.table[,3]
     indata.cnv=do.call(rbind,by(indata.cnv,rn,colMeans))[unique(rn),]
 
+    rn=unique(rn)
+
   }else
   {
     rn=intersect(intersect(rownames(indata.exp),rownames(indata.meth)),rownames(indata.cnv))
