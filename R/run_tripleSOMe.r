@@ -1,10 +1,12 @@
 run.som <- function(modpar=modpar,modsom=modsom)
 {
-  library(oposSOM)
-  library(igraph)
-  library(ape)
-  library(tsne)
-  library(fastICA)
+  #library(oposSOM)
+  #library(igraph)
+  #library(ape)
+  #library(tsne)
+  #library(fastICA)
+
+
 
   #source("multiSOMe.r")
 

@@ -5,7 +5,7 @@
 #' @param indata.cnv  copy number variation matrix, Should have the same colnames as indata.exp and indata.meth
 #' @param modpar  see manual of modpar function
 #'
-#' @return modified matrix for input
+#' @return modified matrix for input, harmonization weights
 #' @export
 
 ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
@@ -47,11 +47,12 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
     annotation_vec=annotation[,1]
     names(annotation_vec)=annotation[,2]
     indata.meth=do.call(rbind, by(indata.meth,annotation_vec, colMeans))[unique(annotation_vec),]
+    row.ids.meth="ensembl_gene_id"
   }
   if(meth.type=="450K")
     {
 
-    library(ChAMP)
+  #  library(ChAMP)
 
 
     myNorm <- champ.norm(beta=indata.meth,arraytype="450K",cores=5)
@@ -62,7 +63,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
   if(meth.type=="EPIC")
   {
 
-    library(ChAMP)
+  #  library(ChAMP)
 
     myNorm <- champ.norm(beta=indata.meth,arraytype="EPIC",cores=5)
 
@@ -95,7 +96,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
 
   if(row.ids.meth!=row.ids.exp && row.ids.cnv!=row.ids.exp)
   {
-    library("biomaRt" )
+  #  library("biomaRt" )
 
     mart<-useMart(biomart = database.biomart, host =host) #   "jul2015.archive.ensembl.org"
     mart<-useDataset(database.dataset ,mart=mart)
@@ -137,7 +138,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
   }
 
 
-    library("biomaRt" )
+  #  library("biomaRt" )
 
     mart<-useMart(biomart = database.biomart, host = host ) #   "jul2015.archive.ensembl.org"
     mart<-useDataset(database.dataset ,mart=mart)
@@ -168,7 +169,7 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
 
   if(quant.exp)
   {
-    indata.exp = oposSOM:::Quantile.Normalization( indata.exp )
+    indata.exp = Quantile.Normalization( indata.exp )
 
     cat( "\nQuantile normalization indata.exp\n" ); flush.console()
   }
@@ -176,14 +177,14 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
 
   if(quant.meth)
   {
-    indata.meth = oposSOM:::Quantile.Normalization( indata.meth )
+    indata.meth = Quantile.Normalization( indata.meth )
     cat( "\nQuantile normalization indata.meth\n" ); flush.console()
 
   }
 
   if(quant.cnv)
   {
-    indata.cnv = oposSOM:::Quantile.Normalization( indata.cnv )
+    indata.cnv = Quantile.Normalization( indata.cnv )
 
     cat( "\nQuantile normalization indata.cnv\n" ); flush.console()
   }
@@ -211,7 +212,18 @@ ModSOM <- function(indata.exp,indata.meth,indata.cnv,group.labels,modpar)
 
   }
 
-
+  if(weight_exp==0)
+    weight_exp=0.001
+  if(weight_exp==1)
+    weight_exp=0.999
+   if(weight_meth==0)
+    weight_meth=0.001
+  if(weight_meth==1)
+    weight_meth=0.999
+  if(weight_cnv==0)
+    weight_cnv=0.001
+  if(weight_cnv==1)
+    weight_cnv=0.999
 
   w_meth=mean(unlist(abs(indata.meth)))
   indata.meth= indata.meth*weight_meth/w_meth

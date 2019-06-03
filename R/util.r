@@ -58,7 +58,7 @@ util.call <- function(fn, env) {
 
 #
 util.save <- function(env, filename) {
-  return(tools:::makeLazyLoadDB(env, filename))
+  return(makeLazyLoadDB(env, filename))
 }
 
 #
